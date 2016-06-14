@@ -1,10 +1,5 @@
-% not working
-member(X,[X|_]).
-member(X,[_|XS]):- 
-	member(X,XS).
-
 append([],B,B).
-append([A|AS],B[A|Res]):-
+append([A|AS],B,[A|Res]):-
 	append(AS,B,Res).
 
 length([],0).
@@ -16,26 +11,25 @@ nth(L,N,X) :-
 	append(A,[X|_], L),
 	length(A,N).
 
-last_equal(X,Y) :-
-	length(X,N), length(Y,N),
-	nth(X,N,XL), nth(Y,N,YL),
-	XL =:= YL.
+last_equal([X],[X]).
+last_equal([X|XS], [Y|YS]):- 
+	last_equal(XS,YS).
 
-greater([],[]).
-greater([X|XS], [Y|YS]) :-
+% Всички елементи без последния в първия списък са по-големи от елементите на същата позиция във втория сисък
+ggreater([_],[_]).
+ggreater([X|XS], [Y|YS]) :-
 	X > Y,
-	greater(XS,YS).
+	ggreater(XS,YS).
+
+% Генерира всички последователни подсписъци
+sl([],[]).
+sl(L, X) :-
+	append(A,B,L),
+	append(X,C,B).
 
 p(X,Y,Z) :-
-	length(X,N),			% N e дължината на X
-	append(L,R,Y),			% L и R са такива подсписъци, че удовлетворяват условията на задачата
-	(( 	length(L,N),		% |X| == |L|
-		greater(L, X),		% Всеки елемент от L е по-голям от елемента на същата позиция в X
-		last_equal(X,L),		% Последните елементи на X и L са равни
-		Z is L)			% Z e L
-	;
-	(	length(R,N),
-		greater(R,X),
-		last_equal(R,X),
-		Z is R)
-	).
+	length(X,N),
+	sl(Y,Z),			% Генерираме подспсък
+	length(Z,N),		% Дължината му трябва да е равна на дължината на Х
+	ggreater(Z,X),		% Всички елементи в Z без последния трябва да са по-големи от елементите на същата	 позиция в Х
+	last_equal(X,Z).	% Последните елементи в двата списъка трябва да са еднакви
