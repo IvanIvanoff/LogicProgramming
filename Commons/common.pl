@@ -14,6 +14,6 @@ p(L) :-
 			member(Z,L),
 			X=\=Z, Y=\=Z,
 			member(W,Z)
-		)).
+		))
 	)).
 
