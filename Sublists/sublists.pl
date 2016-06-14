@@ -27,12 +27,12 @@ greater([X|XS], [Y|YS]) :-
 	greater(XS,YS).
 
 p(X,Y,Z) :-
-	length(X,N),				% N e дължината на X
-	append(L,R,Y),		% L и R са такива подсписъци, че удовлетворяват условията на задачата
+	length(X,N),			% N e дължината на X
+	append(L,R,Y),			% L и R са такива подсписъци, че удовлетворяват условията на задачата
 	(( 	length(L,N),		% |X| == |L|
 		greater(L, X),		% Всеки елемент от L е по-голям от елемента на същата позиция в X
 		last_equal(X,L),		% Последните елементи на X и L са равни
-		Z is L)				% Z e L
+		Z is L)			% Z e L
 	;
 	(	length(R,N),
 		greater(R,X),
