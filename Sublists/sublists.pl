@@ -1,3 +1,5 @@
+% not working
+
 append([],B,B).
 append([A|AS],B,[A|Res]):-
 	append(AS,B,Res).
@@ -11,13 +13,15 @@ nth(L,N,X) :-
 	append(A,[X|_], L),
 	length(A,N).
 
+last_equal([X],[X]).
+last_equal([X|XS], [Y|YS]):- 
+	last_equal(XS,YS).
 
-
-% Всички елементи без последния в първия списък са по-големи от елементите на същата позиция във втория сисък
-greater_and_last_equal([X],[X]).
-greater_and_last_equal([X|XS], [Y|YS]) :-
+% Всички елементи в първия списък са по-големи от елементите на същата позиция във втория сисък
+greater([],[]).
+greater([X|XS], [Y|YS]) :-
 	X > Y,
-	greater_and_last_equal(XS,YS).
+	greater(XS,YS).
 
 % Генерира всички последователни подсписъци
 sl([],[]).
@@ -27,5 +31,8 @@ sl(L, X) :-
 
 p(X,Y,Z) :-
 	length(X,N),
+	length(Y,M),
+	nth(Y,M,YL),
 	sl(Y,Z),			
-	greater_and_last_equal(Z,X).	
+	greater(Z,X),
+	nth(Z, N, YL).
