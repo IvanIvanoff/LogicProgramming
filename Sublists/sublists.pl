@@ -12,11 +12,6 @@ length([X|XS], N):-
 nth(L,N,X) :-
 	append(A,[X|_], L),
 	length(A,N).
-
-last_equal([X],[X]).
-last_equal([X|XS], [Y|YS]):- 
-	last_equal(XS,YS).
-
 % Всички елементи в първия списък са по-големи от елементите на същата позиция във втория сисък
 greater([],[]).
 greater([X|XS], [Y|YS]) :-
@@ -31,8 +26,10 @@ sl(L, X) :-
 
 p(X,Y,Z) :-
 	length(X,N),
+	N1 is N-1,
 	length(Y,M),
-	nth(Y,M,YL),
+	M1 is M-1,
+	nth(Y,M1,YL),
 	sl(Y,Z),			
 	greater(Z,X),
-	nth(Z, N, YL).
+	nth(Z, N1, YL).
